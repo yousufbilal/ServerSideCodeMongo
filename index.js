@@ -1,55 +1,34 @@
-// import { MongoClient } from 'mongodb';
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import UserRoutes from './routes/UserRoutes.js';
 
-// const client = new MongoClient("mongodb+srv://userDB:passwordDB@cluster0.7lpxr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+dotenv.config();  // Load environment variables from .env file
 
-// async function sendData() {
-//     let MonsterMovies = [{
-//         movie1: "Nosfaratu",
-//         movie2: "Dracula",
-//         movie3: "Wolfman",
-//     }]
+const app = express();
 
-//     let MonsterMovies2 = [{
-//         movie1: "shin godzilla",
-//         movie2: "godzilla vs kong",
-//         movie3: "godzilla 0", 
-//     }]
-//     try {
-//         // Connect to MongoDB
-//         await client.connect();
+// Middleware to parse JSON requests
+app.use(express.json());
 
-//         //********SENDING DATA********/
-//         // const insertSingleData = await client.db("data").collection("changestream").insertOne({ movie: "yousuf" })
-//         // const insertMultipleData = await client.db("data").collection("changestream").insertMany(MonsterMovies)
+// Enable CORS for all routes
+app.use(cors());
 
-//         //********RETRIEVE DATA********/
-//         // const retrieveSingleData = await client.db("data").collection("changestream").findOne({ movie: "Nossssfaratu" })
-//         // const retrieveALLData = await client.db("data").collection("changestream").find({}).toArray()
+async function connectDB() {
+    try {
+        await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log('MongoDB connected');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+    }
+}
 
-//         //********UPDATE DATA********/
-//         // const updateSingleData = await client.db("data").collection("changestream").updateOne({ name: "yousuf" }, { $set: { name: "goku" } })
-//         // const updateALLData = await client.db("data").collection("changestream").updateMany({ movie: "yousuf" }, { $set: { movie: "dragon ball z" } });
-//         // const replaceOneData = await client.db("data").collection("changestream").replaceOne({ movie: "yousuf" }, { movie: "nosfaratu", genre: "gothic horror", year: 2025 })
+app.use('/api', UserRoutes);
 
-//         //********DELETE DATA********/
-//         // const deleteSingleData = await client.db("data").collection("changestream").deleteOne({ movie: "dragon ball z" })
-//         // const deleteAllData = await client.db("data").collection("changestream").deleteMany({ movie: "yousuf" })
-//         // const dropCollectionData = await client.db("data").collection("changestream").drop()
+// Use Render's dynamic port or fallback to 3000 locally
+const PORT = process.env.PORT || 3000;
 
-//         // console.log(updateALLData)
-
-//     } catch (error) {
-//         console.error('Error:', error);
-//     } finally {
-//         // Close the connection
-//         await client.close();
-//     }
-// }
-
-// sendData();
-
-
-// // "scripts": {
-// //     "start": "node server.js",
-// //     "dev": "nodemon server.js"
-// //   }
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    connectDB();
+});
