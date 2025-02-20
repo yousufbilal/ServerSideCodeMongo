@@ -23,6 +23,10 @@ router.post('/users', async (req, res) => {
 
 router.get("/users", async (req, res) => {
     //make try catch here 
+
+    //before i fetch clg checks for requests receive 
+    console.log("yousuf sucuess")
+
     const user = await User.find({})
     res.status(200).json(user)
 })
