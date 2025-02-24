@@ -1,30 +1,34 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import UserRoutes from './routes/UserRoutes.js';
+// import express from 'express';
+// import mongoose from 'mongoose';
+// import cors from 'cors';
+// import UserRoutes from './routes/UserRoutes.js';
+// import dotenv from 'dotenv';
 
-const app = express();
 
-// Middleware to parse JSON requests
-app.use(express.json());
+// dotenv.config();
 
-// Enable CORS for all routes
-app.use(cors());  // This allows all origins to access the API
+// const app = express();
 
-async function connectDB() {
-    try {
-        await mongoose.connect('mongodb+srv://userDB:passwordDB@cluster0.7lpxr.mongodb.net/myDatabase?retryWrites=true&w=majority');
-        console.log('MongoDB connected');
-    } catch (error) {
-        console.error('MongoDB connection error:', error);
-    }
-}
+// // Middleware to parse JSON requests
+// app.use(express.json());
 
-app.use('/api', UserRoutes);
+// // Enable CORS for all routes
+// app.use(cors());  // This allows all origins to access the API
 
-const PORT = process.env.PORT || 3000;  // Use Render's port or default to 3000
+// async function connectDB() {
+//     try {
+//         await mongoose.connect('mongodb+srv://userDB:passwordDB@cluster0.7lpxr.mongodb.net/myDatabase?retryWrites=true&w=majority');
+//         console.log('MongoDB connected');
+//     } catch (error) {
+//         console.error('MongoDB connection error:', error);
+//     }
+// }
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    connectDB();
-});
+// app.use('/api', UserRoutes);
+
+// const PORT = process.env.PORT || 3000;  // Use Render's port or default to 3000
+
+// app.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+//     connectDB();
+// });
