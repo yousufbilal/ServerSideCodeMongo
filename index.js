@@ -7,7 +7,6 @@ import UserRoutes from './routes/UserRoutes.js';
 dotenv.config();  // Load environment variables from .env file
 
 const app = express();
-
 // Middleware to parse JSON requests
 app.use(express.json());
 
