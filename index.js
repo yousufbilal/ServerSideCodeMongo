@@ -25,7 +25,7 @@ async function connectDB() {
 app.use('/api', UserRoutes);
 
 // Use Render's dynamic port or fallback to 3000 locally
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
